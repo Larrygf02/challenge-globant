@@ -6,10 +6,10 @@ def get_connection():
     return conn
 
 
-def bulk_data(path):
+def bulk_data(path, table_name):
     conn = get_connection()
     cursor = conn.cursor()
     with open(path, 'r') as f:
-        cursor.copy_from(f, 'employees', sep=',', null='')
+        cursor.copy_from(f, table_name, sep=',', null='')
         conn.commit()
     conn.close()
