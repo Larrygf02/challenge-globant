@@ -1,1 +1,1 @@
-from .manager import bulk_data
+from .manager import bulk_data, get_data
