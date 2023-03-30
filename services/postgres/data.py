@@ -65,6 +65,7 @@ def group_by_quarter():
         ON d.id = e.department_id
         INNER JOIN jobs j
         ON j.id = e.job_id
+        where EXTRACT(year from e.datetime::timestamp) = 2021
         GROUP BY
             d.department,
             j.job
@@ -73,5 +74,21 @@ def group_by_quarter():
             j.job;
     """
 
+    results = read_query(query)
+    return results
+
+
+def group_employee():
+    query = """
+        SELECT 
+            d.department,
+            count(*) as hired
+        FROM employees e
+        INNER JOIN departments d
+        ON e.department_id = d.id
+        WHERE EXTRACT(year from e.datetime::timestamp) = 2021
+        GROUP BY d.department
+        ORDER BY hired desc
+    """
     results = read_query(query)
     return results
