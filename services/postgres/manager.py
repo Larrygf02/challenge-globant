@@ -35,3 +35,16 @@ def insert_many(query, data):
     conn.commit()
     cursor.close()
     conn.close()
+
+
+def execute(query):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        cursor.close()
+        conn.close()
+    except Exception as e:
+        return False
+    return True

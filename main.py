@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from services.postgres import get_data, insert_data
+from services.postgres import get_data, insert_data, backup_data, restore_data
 from services.data import validate_body
 
 app = Flask(__name__)
@@ -60,6 +60,26 @@ def post_job():
         return jsonify({"status": True})
     else:
         return jsonify({"status": False, "message": message})
+
+
+@app.route("/backup", methods=["POST"])
+def do_backup():
+    body = request.get_json()
+    table_name = body['table_name']
+    _, error = backup_data(table_name)
+    if error:
+        return jsonify({"status": True, "message": error})
+    return jsonify({"status": True})
+
+
+@app.route("/restore", methods=["POST"])
+def do_restore():
+    body = request.get_json()
+    table_name = body['table_name']
+    _, error = restore_data(table_name)
+    if error:
+        return jsonify({"status": False, "message": error})
+    return jsonify({"status": True})
 
 
 if __name__ == '__main__':
