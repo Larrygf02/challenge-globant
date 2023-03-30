@@ -1,7 +1,9 @@
 from .manager import insert_many
 
 QUERIES = {
-    "employees": "INSERT INTO employees(id, name, datetime, department_id, job_id) VALUES (%s, %s, %s, %s, %s)"
+    "employees": "INSERT INTO employees(id, name, datetime, department_id, job_id) VALUES (%s, %s, %s, %s, %s)",
+    "departments": "INSERT INTO departments(id, department) VALUES (%s, %s)",
+    "jobs": "INSERT INTO jobs(id,job) VALUES (%s, %s)"
 }
 
 

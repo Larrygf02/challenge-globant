@@ -11,6 +11,22 @@ SCHEMAS = {
             "job_id": {"type": "integer"}
         },
         "required": ["id", "name", "datetime", "department_id", "job_id"]
+    },
+    "departments": {
+        "type": "object",
+        "properties": {
+            "id": {"type": "integer"},
+            "department": {"type": "string"},
+        },
+        "required": ["id", "department"]
+    },
+    "jobs": {
+        "type": "object",
+        "properties": {
+            "id": {"type": "integer"},
+            "job": {"type": "string"},
+        },
+        "required": ["id", "job"]
     }
 }
 

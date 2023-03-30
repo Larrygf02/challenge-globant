@@ -29,7 +29,32 @@ def post_employee():
     validated, message = validate_body(body, 'employees')
     if validated:
         _, error = insert_data(body, 'employees')
-        print("Error", error)
+        if error:
+            return jsonify({"status": False, "message": error})
+        return jsonify({"status": True})
+    else:
+        return jsonify({"status": False, "message": message})
+
+
+@app.route("/department", methods=['POST'])
+def post_department():
+    body = request.get_json()
+    validated, message = validate_body(body, 'departments')
+    if validated:
+        _, error = insert_data(body, 'departments')
+        if error:
+            return jsonify({"status": False, "message": error})
+        return jsonify({"status": True})
+    else:
+        return jsonify({"status": False, "message": message})
+
+
+@app.route("/job", methods=['POST'])
+def post_job():
+    body = request.get_json()
+    validated, message = validate_body(body, 'jobs')
+    if validated:
+        _, error = insert_data(body, 'jobs')
         if error:
             return jsonify({"status": False, "message": error})
         return jsonify({"status": True})
