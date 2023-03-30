@@ -8,7 +8,7 @@ create table employees (
 
 create table departments (
     id int primary key,
-    deparment varchar(50)
+    department varchar(50)
 );
 
 create table jobs (
