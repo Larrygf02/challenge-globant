@@ -1,3 +1,6 @@
+create database globant;
+use database globant;
+
 create table employees (
     id int primary key,
     name varchar(50),
