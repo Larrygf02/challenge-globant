@@ -12,6 +12,13 @@ Dependencies: python, postgres
 
 2. Inside database globant execute the file "resources/sql/init.sql" to create the tables
 
+3. Setup postgres username and password if different from mine in "services/config/variables.py"
+
+```
+    user = "postgres"
+    password = "admin"
+```
+
 ### START PROJECT LOCAL
 
 1. Create environment and install dependencies
@@ -36,3 +43,5 @@ Dependencies: python, postgres
 ```
 
 4. Download postman collection to test the endpoints "challenge.postman_collection.json"
+
+https://raw.githubusercontent.com/Larrygf02/challenge-globant/develop/challenge.postman_collection.json

@@ -1,9 +1,11 @@
 import psycopg2
 from services.data import transform_results
+from services.config import user, password, database
 
 
 def get_connection():
-    conn = psycopg2.connect("dbname=globant user=postgres password=admin")
+    conn = psycopg2.connect(
+        f"dbname={database} user={user} password={password}")
     return conn
 
 
