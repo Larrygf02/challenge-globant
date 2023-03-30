@@ -1,4 +1,4 @@
-from .manager import insert_many, execute
+from .manager import insert_many, execute, read_query
 
 QUERIES = {
     "employees": "INSERT INTO employees(id, name, datetime, department_id, job_id) VALUES (%s, %s, %s, %s, %s)",
@@ -48,3 +48,30 @@ def restore_data(table_name):
     else:
         return (False, f"No existe backup {table_name}")
     return (True, None)
+
+
+def group_by_quarter():
+    query = """
+        SELECT
+            d.department,
+            j.job,
+            COUNT(*) FILTER (WHERE date_trunc('quarter', datetime::timestamp) >= '2021-01-01' AND date_trunc('quarter', datetime::timestamp) < '2021-04-01') AS Q1,
+            COUNT(*) FILTER (WHERE date_trunc('quarter', datetime::timestamp) >= '2021-04-01' AND date_trunc('quarter', datetime::timestamp) < '2021-07-01') AS Q2,
+            COUNT(*) FILTER (WHERE date_trunc('quarter', datetime::timestamp) >= '2021-07-01' AND date_trunc('quarter', datetime::timestamp) < '2021-10-01') AS Q3,
+            COUNT(*) FILTER (WHERE date_trunc('quarter', datetime::timestamp) >= '2021-10-01' AND date_trunc('quarter', datetime::timestamp) < '2022-01-01') AS Q4
+        FROM
+            employees e
+        INNER JOIN departments d
+        ON d.id = e.department_id
+        INNER JOIN jobs j
+        ON j.id = e.job_id
+        GROUP BY
+            d.department,
+            j.job
+        ORDER BY
+            d.department,
+            j.job;
+    """
+
+    results = read_query(query)
+    return results
