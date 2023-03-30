@@ -48,3 +48,16 @@ def execute(query):
     except Exception as e:
         return False
     return True
+
+
+def read_query(query):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    columns = [desc[0] for desc in cursor.description]
+    result = transform_results(rows, columns)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return result

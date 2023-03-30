@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from services.postgres import get_data, insert_data, backup_data, restore_data
+from services.postgres import get_data, insert_data, backup_data, restore_data, group_by_quarter, group_employee
 from services.data import validate_body
 
 app = Flask(__name__)
@@ -80,6 +80,18 @@ def do_restore():
     if error:
         return jsonify({"status": False, "message": error})
     return jsonify({"status": True})
+
+
+@app.route("/group_quarter")
+def group_quarter():
+    results = group_by_quarter()
+    return jsonify({"response": results})
+
+
+@app.route("/group_employees")
+def group_employees():
+    results = group_employee()
+    return jsonify({"response": results})
 
 
 if __name__ == '__main__':
