@@ -1,5 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from services.postgres import get_data
+from services.data import validate_body
 
 app = Flask(__name__)
 
@@ -20,6 +21,16 @@ def get_jobs():
 def get_departments():
     data = get_data('departments')
     return jsonify(data)
+
+
+@app.route("/employee", methods=['POST'])
+def post_employee():
+    body = request.get_json()
+    validated, message = validate_body(body, 'employees')
+    if validated:
+        return jsonify({"status": True})
+    else:
+        return jsonify({"status": False, "message": message})
 
 
 if __name__ == '__main__':

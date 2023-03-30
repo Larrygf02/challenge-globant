@@ -1,4 +1,28 @@
-import json
+from jsonschema import validate
+
+SCHEMAS = {
+    "employees": {
+        "type": "object",
+        "properties": {
+            "id": {"type": "integer"},
+            "name": {"type": "string"},
+            "datetime": {"type": "string", "format": "date-time"},
+            "department_id": {"type": "integer"},
+            "job_id": {"type": "integer"}
+        },
+        "required": ["id", "name", "datetime", "department_id", "job_id"]
+    }
+}
+
+
+def validate_body(body, table_name):
+    schema = SCHEMAS[table_name]
+    for item in body:
+        try:
+            validate(instance=item, schema=schema)
+        except Exception as e:
+            return (False, f"{item} is not valid, error: {e}")
+    return (True, None)
 
 
 def transform_results(query_result, columns):
