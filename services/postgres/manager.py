@@ -26,3 +26,12 @@ def get_data(table_name):
     cursor.close()
     conn.close()
     return result
+
+
+def insert_many(query, data):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.executemany(query, data)
+    conn.commit()
+    cursor.close()
+    conn.close()
